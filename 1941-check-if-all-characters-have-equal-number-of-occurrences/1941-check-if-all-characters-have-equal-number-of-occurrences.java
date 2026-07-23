@@ -20,13 +20,16 @@ class Solution {
             
 
     }
-   int value = map.getOrDefault(s.charAt(0), 0);  
-            for(char x:map.keySet()){
-                 if(!map.get(x).equals(value)){
-                    return false;
-                 }
-            } 
-    return true;
+   int targetFreq = map.get(s.charAt(0));
+
+
+for (int freq : map.values()) {
+    if (freq != targetFreq) {
+        return false;
+    }
+}
+return true;
+
     // return new HashSet<>(map.values()).size() == 1;
    }       
 }
