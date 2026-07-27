@@ -14,7 +14,7 @@ class Solution {
             }
         }
         
-        // At the end of the loop, low and high will point exactly to the peak index
+        
         return low;
     }
 }
