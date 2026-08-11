@@ -8,13 +8,12 @@ class Solution {
             res[i] = pre;
             pre *= nums[i];
         }
-        
+            
         int suf = 1;
         for(int i = n - 1; i >= 0; i--){
             res[i] *= suf;
             suf *= nums[i];
-        }
-        
+        }  
         return res;
     }
 }
