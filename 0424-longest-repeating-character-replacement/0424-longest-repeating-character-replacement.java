@@ -1,22 +1,23 @@
 class Solution {
     public int characterReplacement(String s, int k) {
-        int i = 0;
-        int count= 0;
-        int maxlen = 0;
-        int[] arr= new int[26];
+        HashMap<Character,Integer> map=new HashMap<>();
+        int l=0;
+        int maxFre=0;
+        int maxLen=0;
+        for(int r=0;r<s.length();r++){
+            map.put(s.charAt(r),map.getOrDefault(s.charAt(r),0)+1);
 
-        for (int j = 0; j < s.length(); j++) {
-            char ch = s.charAt(j);
-            arr[ch - 'A']++;
-            count = Math.max(count, arr[ch - 'A']);
-            while((j-i+1)-count>k){
-                arr[s.charAt(i)-'A']--;
-                i++;
+            //find maxFre
+            maxFre=Math.max(maxFre,map.get(s.charAt(r)));
+
+            //if replacement needed>k
+            while((r-l+1)-maxFre > k){
+                map.put(s.charAt(l),map.get(s.charAt(l))-1);
+                l++;
             }
-            maxlen=Math.max(maxlen,(j-i+1));
+            maxLen=Math.max(maxLen,r-l+1);
         }
-
+        return maxLen;
         
-        return maxlen;
     }
 }
