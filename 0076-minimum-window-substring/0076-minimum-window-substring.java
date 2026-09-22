@@ -1,41 +1,55 @@
+import java.util.HashMap;
+
 class Solution {
     public String minWindow(String s, String t) {
-        HashMap<Character,Integer> smap= new HashMap<>();
-        HashMap<Character,Integer> tmap= new HashMap<>();
-        int formed=0;
-        int needed=t.length();
-        String ans="";
-        int minlen=Integer.MAX_VALUE;
-        for(int i=0;i<t.length();i++){
-            tmap.put(t.charAt(i),tmap.getOrDefault(t.charAt(i),0)+1);
+        if (s == null || t == null || s.length() < t.length()) {
+            return "";
         }
-        int start=0;
-        int end=0;
-        while(end<s.length()){
-            char enter = s.charAt(end);
-            if(tmap.containsKey(enter)){
-                smap.put(enter,smap.getOrDefault(enter,0)+1);
-                if(smap.get(enter)<=tmap.get(enter))
-                formed++;
-            }
-            while(formed==needed){
-                int curlen=end-start+1;
-                if(curlen<minlen){
-                    minlen=curlen;
-                    ans=s.substring(start,end+1);
-                }
-                char del =s.charAt(start);
-                if(smap.containsKey(del)){
-                if(smap.get(del)<=tmap.get(del)){
-                    formed--;
 
-                }
-                smap.put(del,smap.getOrDefault(del,0)-1);}
-                start++;
-            }
-        
-        end++;
+        HashMap<Character,Integer> tmap = new HashMap<>(); 
+        HashMap<Character,Integer> smap = new HashMap<>();
+
+        int l = 0;
+        int formed = 0;
+        int minLen = Integer.MAX_VALUE;
+        String ans = ""; 
+
+        //tmap creation 
+        for(int i = 0; i < t.length(); i++){
+            tmap.put(t.charAt(i), tmap.getOrDefault(t.charAt(i), 0) + 1);
         }
+        
+        int needed = tmap.size();
+      
+        for(int r = 0; r < s.length(); r++){
+            char ch = s.charAt(r);
+
+            if(tmap.containsKey(ch)){
+                smap.put(ch, smap.getOrDefault(ch, 0) + 1);
+                if(smap.get(ch).equals(tmap.get(ch))){
+                    formed++;
+                }
+            }
+
+            // window is valid - Inside the for-loop so 'r' is accessible
+            while(formed == needed){
+                if (r - l + 1 < minLen) {
+                    minLen = r - l + 1;
+                    ans = s.substring(l, r + 1); // Assigned substring to ans
+                }
+
+                //remove left chracter
+                char leftChar = s.charAt(l);
+                if(tmap.containsKey(leftChar)){ 
+                    if(smap.get(leftChar).equals(tmap.get(leftChar))){
+                        formed--;
+                    }
+                    smap.put(leftChar, smap.get(leftChar) - 1);
+                }
+                l++;
+            } 
+        } 
+        
         return ans;
-    }
+    } 
 }
