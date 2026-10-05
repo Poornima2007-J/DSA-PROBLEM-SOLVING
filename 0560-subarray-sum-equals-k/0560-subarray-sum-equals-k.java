@@ -1,24 +1,18 @@
+class Solution {
+    public int subarraySum(int[] nums, int k) {
+        HashMap<Integer,Integer> pmap=new HashMap<>();
+        int sum=0;
+        int count=0;
+        pmap.put(0,1);
+        for(int r=0;r<nums.length;r++){
+                sum+=nums[r];
+                if(pmap.containsKey(sum-k)){
+                    count+=pmap.get(sum-k);
+                }
 
-
-class Solution{
-public int subarraySum(int[] nums, int k) {
-    
-    Map<Integer, Integer> sumCountMap = new HashMap<>();
-    sumCountMap.put(0, 1);
-    
-    int result = 0;
-    int prefixSum = 0;
-    
-    for (int num : nums) {
-        prefixSum += num;
-        if (sumCountMap.containsKey(prefixSum - k)) {
-            result += sumCountMap.get(prefixSum - k);
+                pmap.put(sum,pmap.getOrDefault(sum,0)+1);
         }
+        return count;
         
-        sumCountMap.put(prefixSum, 
-            sumCountMap.getOrDefault(prefixSum, 0) + 1);
     }
-    
-    return result;
 }
- }
