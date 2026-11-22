@@ -8,11 +8,10 @@ class Solution {
                 set.remove(s.charAt(l));
                 l++;
             }
-            
-                set.add(s.charAt(r));
-                maxLen=Math.max(maxLen,r-l+1);
-          
+            set.add(s.charAt(r));
+            maxLen=Math.max(maxLen,r-l+1);
         }
         return maxLen;
+        
     }
 }
